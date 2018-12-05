@@ -22,6 +22,8 @@ public class ArbolGenealogicoRestController {
         return arbolGenealogicoRepositorio.findAll();
     }
 	
+	
+	
 //	@GetMapping("/padre/{id}") //para consultar
 //  public Persona getPadre(@MatrixVariable (required=true) String sexo,
 //				@MatrixVariable	(required=true) String tipoDocumento,

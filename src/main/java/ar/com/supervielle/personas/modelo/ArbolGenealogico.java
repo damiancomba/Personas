@@ -1,15 +1,17 @@
 package ar.com.supervielle.personas.modelo;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.OneToOne;
 
 import ar.com.supervielle.personas.modelo.ArbolGenealogico.ArbolGenealogicoId;
+import ar.com.supervielle.personas.modelo.Persona.PersonaId;
 
 @Entity
 @IdClass(ArbolGenealogicoId.class)
@@ -18,13 +20,19 @@ public class ArbolGenealogico implements Serializable {
 	private static final long serialVersionUID = 1259327473598037386L;
 
 	@Id
-	@OneToOne(optional=false, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-	private Persona personaId;
+	@JoinColumns({
+		@JoinColumn(name="id_sexo", referencedColumnName="id_sexo"),
+		@JoinColumn(name="id_tipo_documento", referencedColumnName="id_tipo_documento"),
+		@JoinColumn(name="nro_documento", referencedColumnName="nroDocumento"),
+		@JoinColumn(name="id_pais", referencedColumnName="id_pais")
+		})
+	@OneToOne(optional=false, cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+	private Persona hijo;
 	
-	@OneToOne(optional=true, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+	@OneToOne(optional=true, cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
 	private Persona padre;
 	
-	@OneToOne(optional=true, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+	@OneToOne(optional=true, cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
 	private Persona madre;
 	
 	public ArbolGenealogico() {}
@@ -33,17 +41,17 @@ public class ArbolGenealogico implements Serializable {
 			Persona padre,
 			Persona madre) {
 	
-		this.personaId = persona;
+		this.hijo = persona;
 		this.padre = padre;
 		this.madre = madre;
 	}
 
-	public Persona getPersona() {
-		return personaId;
+	public Persona getHijo() {
+		return hijo;
 	}
 
-	public void setPersona(Persona persona) {
-		this.personaId = persona;
+	public void setHijo(Persona persona) {
+		this.hijo = persona;
 	}
 
 	public Persona getPadre() {
@@ -66,30 +74,7 @@ public class ArbolGenealogico implements Serializable {
 
 		private static final long serialVersionUID = 7472442387397382180L;
 
-		private Persona personaId;
+		PersonaId hijo;
 
-        public ArbolGenealogicoId() {}
-
-        public ArbolGenealogicoId(Persona personaId) {
-            this.personaId = personaId;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-
-            if (o == this) {
-                return true;
-            }
-            if (!(o instanceof ArbolGenealogico)) {
-                return false;
-            }
-            ArbolGenealogico arbolGenealogico = (ArbolGenealogico) o;
-            return Objects.equals(personaId, arbolGenealogico.getPersona());
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(personaId);
-        }
    }
 }

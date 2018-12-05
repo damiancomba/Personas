@@ -1,8 +1,5 @@
 package ar.com.supervielle.personas.rest;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -160,7 +157,7 @@ public class PersonaRestController {
         //Darla de alta
         
         ArbolGenealogico relacion = new ArbolGenealogico();
-        relacion.setPersona(hijo);
+        relacion.setHijo(hijo);
         relacion.setPadre(padre);       
         
         return repositorioArbol.save(relacion);
@@ -190,7 +187,7 @@ public class PersonaRestController {
 		// Darla de alta
 
 		ArbolGenealogico relacion = new ArbolGenealogico();
-		relacion.setPersona(hijo);
+		relacion.setHijo(hijo);
 		relacion.setMadre(madre);
 
 		return repositorioArbol.save(relacion);
@@ -206,6 +203,9 @@ public class PersonaRestController {
 			@MatrixVariable	(required=true) String id2TipoDocumento,
 			@MatrixVariable (required=true) Long id2NroDocumento,
 			@MatrixVariable (required=true) int id2Pais) {
+		
+		Persona personaHijo = new Persona();
+		
 //        System.out.println("Voy a actualizar solo los campos especificos de la persona: " + persona.toString());
 		
 //        return repositorioPers.save(persona);
