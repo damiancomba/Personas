@@ -19,6 +19,8 @@ import ar.com.supervielle.personas.modelo.Sexo;
 import ar.com.supervielle.personas.modelo.TipoDocumento;
 import ar.com.supervielle.personas.repositorio.ArbolGenealogicoRepositorio;
 import ar.com.supervielle.personas.repositorio.PersonaRepositorio;
+import ar.com.supervielle.personas.utils.Relaciones;
+
 
 @RestController
 public class PersonaRestController {
@@ -133,14 +135,14 @@ public class PersonaRestController {
     }
 	
 	
-	@PostMapping("/persona/{id1}/padre") //Para modificar solo campos especificos
+	@PostMapping("/persona/{id1}/padre") //Para insertar una relacion de hijo a padre
 	@Transactional
     public ArbolGenealogico personaAltaPadre(@MatrixVariable (required=true) String idSexo,
 			@MatrixVariable	(required=true) String idTipoDocumento,
 			@MatrixVariable (required=true) Long nroDocumento,
-			@MatrixVariable (required=true) int idPais, 
+			@MatrixVariable (required=true) int idPais,
 			@RequestBody Persona hijo) {
-        System.out.println("Voy a actualizar solo los campos especificos de la persona: " + hijo.toString());
+        System.out.println("Voy a insertar una relacion de hijo a padre: " + hijo.toString());
         
         //Buscar la persona que ingresa
         Sexo sexoIn = new Sexo();
@@ -163,14 +165,14 @@ public class PersonaRestController {
         return repositorioArbol.save(relacion);
     }
 	
-	@PostMapping("/persona/{id1}/madre") //Para modificar solo campos especificos
+	@PostMapping("/persona/{id1}/madre") //Para insertar una relacion de hijo a madre
 	@Transactional
     public ArbolGenealogico personaAltaMadre(@MatrixVariable (required=true) String idSexo,
 			@MatrixVariable	(required=true) String idTipoDocumento,
 			@MatrixVariable (required=true) Long nroDocumento, 
 			@MatrixVariable (required=true) int idPais,
 			@RequestBody Persona hijo) {
-        System.out.println("Voy a actualizar solo los campos especificos de la persona: " + hijo.toString());
+        System.out.println("Voy a insertar una relacion de hijo a madre: " + hijo.toString());
         
 		// Buscar la persona que ingresa
         Sexo sexoIn = new Sexo();
@@ -191,27 +193,7 @@ public class PersonaRestController {
 		relacion.setMadre(madre);
 
 		return repositorioArbol.save(relacion);
-    }
-	
-	@GetMapping("/relaciones/{id1}/{id2}") //Para modificar solo campos especificos
-	@Transactional
-    public Persona getPersonaRelacion(@MatrixVariable (required=true) String id1Sexo,
-			@MatrixVariable	(required=true) String id1TipoDocumento,
-			@MatrixVariable (required=true) Long id1NroDocumento,
-			@MatrixVariable (required=true) int id1Pais,
-			@MatrixVariable (required=true) String id2Sexo,
-			@MatrixVariable	(required=true) String id2TipoDocumento,
-			@MatrixVariable (required=true) Long id2NroDocumento,
-			@MatrixVariable (required=true) int id2Pais) {
-		
-		Persona personaHijo = new Persona();
-		
-//        System.out.println("Voy a actualizar solo los campos especificos de la persona: " + persona.toString());
-		
-//        return repositorioPers.save(persona);
-		
-		return null;
-    }
+    }	
 	
 }
 

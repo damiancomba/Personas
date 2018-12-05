@@ -1,7 +1,5 @@
 package ar.com.supervielle.personas;
 
-import java.util.concurrent.TimeUnit;
-
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,8 +19,6 @@ import ar.com.supervielle.personas.repositorio.SexoRepositorio;
 public class PersonasApplication {
 	
 	public static void main(String[] args) {
-		SimpleRateLimiter.create(1100, TimeUnit.SECONDS);
-		
 		SpringApplication.run(PersonasApplication.class, args);
 	}
 

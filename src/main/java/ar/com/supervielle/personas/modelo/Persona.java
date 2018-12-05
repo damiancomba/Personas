@@ -57,10 +57,10 @@ public class Persona implements Serializable {
 	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date fechaNacimiento;
 	
-	@Min(value = 18)
+	@Min(value = 18, message = "Debe tener al menos 18 años")
 	private int edad;
 	
-	@Size(min = 1)
+	@Size(min = 1, message = "Al menos debe tener un contacto")
 	@ManyToMany(fetch=FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH})
 	@JoinColumns({
 		@JoinColumn(name = "nroDocumento", nullable=false, updatable=true),
@@ -197,6 +197,13 @@ public class Persona implements Serializable {
         public int hashCode() {
             return Objects.hash(sexo, tipoDocumento, nroDocumento, pais);
         }
+	}
+
+	@Override
+	public String toString() {
+		return "Persona [sexo=" + sexo + ", tipoDocumento=" + tipoDocumento + ", nroDocumento=" + nroDocumento
+				+ ", pais=" + pais + ", nombre=" + nombre + ", apellido=" + apellido + ", fechaNacimiento="
+				+ fechaNacimiento + ", edad=" + edad + ", contactos=" + contactos + "]";
 	}
 	
 }
